@@ -8,7 +8,7 @@ describe('test one', () => {
       endDateTime: '2022-03-12T07:30:00.000Z',
       step: 20,
       period: 'm',
-      days: [6],
+      daysInWeek: [6],
       gap: 0,
     };
     let result = [
@@ -31,7 +31,7 @@ describe('test one', () => {
       endDateTime: '2022-03-11T08:30:00.000Z',
       step: 20,
       period: 'm',
-      days: [5],
+      daysInWeek: [5],
       gap: 10,
     };
     let result = [
@@ -54,7 +54,7 @@ describe('test one', () => {
       endDateTime: '2022-03-18T07:30:00.000Z',
       step: 1,
       period: 'h',
-      days: [6, 1, 3],
+      daysInWeek: [6, 1, 3],
       gap: 0,
     };
     let result = [
