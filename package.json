@@ -1,0 +1,30 @@
+{
+  "name": "time-slot-generator",
+  "version": "1.0.0",
+  "description": "Generating time slots between a time range",
+  "main": "index.js",
+  "scripts": {
+    "pub": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
+    "test": "jest --watchAll --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smdpro/time-slot-generator.git"
+  },
+  "keywords": [
+    "datetime",
+    "timeslot"
+  ],
+  "author": "Samad Rahimi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smdpro/time-slot-generator/issues"
+  },
+  "homepage": "https://github.com/smdpro/time-slot-generator#readme",
+  "dependencies": {
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
