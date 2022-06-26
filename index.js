@@ -6,22 +6,22 @@ const Periods = Object.freeze({
 });
 const MINUTES_PER_HOUR = 60;
 const MINUTES_PER_DAY = MINUTES_PER_HOUR * 24;
-module.exports = (data) => {
+module.exports = (data = {}) => {
   let {
-    startDateTime,
-    endDateTime,
-    step=5,
+    start = moment(),
+    end = moment().add(1, 'hour'),
+    step = 5,
     period = Periods.minute,
     daysInWeek = [1, 2, 3, 4, 5, 6, 7],
     gap = 0,
   } = data;
-  
+
   const timeSlots = [];
 
-  let start = moment(startDateTime);
-  const end = moment(endDateTime);
-  const [startHour,startMinute] = start.format('HH:mm').split(':');
-  const [endHour,endMinute] = end.format('HH:mm').split(':');
+  start = moment(start);
+  end = moment(end);
+  const [startHour, startMinute] = start.format('HH:mm').split(':');
+  const [endHour, endMinute] = end.format('HH:mm').split(':');
   let pmToAm = false;
 
   if (period === Periods.minute && gap > 0) step = step + gap;
@@ -40,7 +40,8 @@ module.exports = (data) => {
   if (period === Periods.day) {
     let current = moment(start);
     while (current <= end) {
-      if (daysInWeek.includes(current.isoWeekday())) timeSlots.push(current.toDate());
+      if (daysInWeek.includes(current.isoWeekday()))
+        timeSlots.push(current.toDate());
       current.add(step, period);
     }
     return timeSlots;
@@ -56,7 +57,7 @@ module.exports = (data) => {
       hour: endHour,
       minute: endMinute,
     });
-    
+
     if (current > edt) {
       edt = moment(start).set({
         hour: 23,

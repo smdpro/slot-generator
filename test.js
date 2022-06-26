@@ -4,8 +4,8 @@ const moment = require('moment');
 describe('test one', () => {
   it('Should generate 6 slot', () => {
     let data = {
-      startDateTime: '2022-03-12T05:30:00.000Z',
-      endDateTime: '2022-03-12T07:30:00.000Z',
+      start: '2022-03-12T05:30:00.000Z',
+      end: '2022-03-12T07:30:00.000Z',
       step: 20,
       period: 'm',
       daysInWeek: [6],
@@ -27,8 +27,8 @@ describe('test one', () => {
 
   it('Should generate 6 slot', () => {
     let data = {
-      startDateTime: '2022-03-11T05:30:00.000Z',
-      endDateTime: '2022-03-11T08:30:00.000Z',
+      start: '2022-03-11T05:30:00.000Z',
+      end: '2022-03-11T08:30:00.000Z',
       step: 20,
       period: 'm',
       daysInWeek: [5],
@@ -50,8 +50,8 @@ describe('test one', () => {
 
   it('Should generate one hour slots', () => {
     let data = {
-      startDateTime: '2022-03-12T05:30:00.000Z',
-      endDateTime: '2022-03-18T07:30:00.000Z',
+      start: '2022-03-12T05:30:00.000Z',
+      end: '2022-03-18T07:30:00.000Z',
       step: 1,
       period: 'h',
       daysInWeek: [6, 1, 3],
