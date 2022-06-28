@@ -70,4 +70,56 @@ describe('test one', () => {
     for (let i = 0; i < res.length; i++)
       expect(moment(res[i]).toDate()).toEqual(moment(result[i]).toDate());
   });
+
+  it('Should generate one hour slots', () => {
+    let data = {
+      start: '2022-06-29T18:30:00.000Z',
+      end: '2022-06-29T20:30:00.000Z',
+      step: 20,
+      period: 'm',
+      daysInWeek: [3, 4],
+      gap: 0,
+    };
+    let result = [
+      '2022-06-29T18:30:00.000Z',
+      '2022-06-29T18:50:00.000Z',
+      '2022-06-29T19:10:00.000Z',
+      '2022-06-29T19:30:00.000Z',
+      '2022-06-29T19:50:00.000Z',
+      '2022-06-29T20:10:00.000Z',
+    ];
+    let res = generate(data);
+    expect(res.length).toBe(result.length);
+    for (let i = 0; i < res.length; i++)
+      expect(moment(res[i]).toDate()).toEqual(moment(result[i]).toDate());
+  });
+
+  it('Should generate for 3 days', () => {
+    let data = {
+      start: '2022-06-29T05:30:00.000Z',
+      end: '2022-07-06T06:30:00.000Z',
+      step: 20,
+      period: 'm',
+      daysInWeek: [6, 1, 3],
+      gap: 0,
+    };
+    let result = [
+      '2022-06-29T05:30:00.000Z',
+      '2022-06-29T05:50:00.000Z',
+      '2022-06-29T06:10:00.000Z',
+      '2022-07-02T05:30:00.000Z',
+      '2022-07-02T05:50:00.000Z',
+      '2022-07-02T06:10:00.000Z',
+      '2022-07-04T05:30:00.000Z',
+      '2022-07-04T05:50:00.000Z',
+      '2022-07-04T06:10:00.000Z',
+      '2022-07-06T05:30:00.000Z',
+      '2022-07-06T05:50:00.000Z',
+      '2022-07-06T06:10:00.000Z',
+    ];
+    let res = generate(data);
+    expect(res.length).toBe(result.length);
+    for (let i = 0; i < res.length; i++)
+      expect(moment(res[i]).toDate()).toEqual(moment(result[i]).toDate());
+  });
 });
