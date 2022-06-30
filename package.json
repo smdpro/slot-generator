@@ -4,7 +4,7 @@
   "description": "Generating time slots between a time range",
   "main": "index.js",
   "scripts": {
-    "publish": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
+    "pub": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
