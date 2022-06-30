@@ -4,7 +4,7 @@
   "description": "Generating time slots between a time range",
   "main": "index.js",
   "scripts": {
-    "pub": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
+    "publish": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
     "test": "jest --watchAll --verbose"
   },
   "repository": {
@@ -13,7 +13,10 @@
   },
   "keywords": [
     "datetime",
-    "timeslot"
+    "timeslot",
+    "moment",
+    "datetime",
+    "datetime range"
   ],
   "author": "Samad Rahimi",
   "license": "MIT",
