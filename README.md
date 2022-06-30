@@ -11,12 +11,12 @@ Generating time slots between a time range
 ### Install
 
 ```bash
-npm install time-slot-generator --save
+npm install slot-generator --save
 ```
 or
 
 ```bash
-yarn add time-slot-generator
+yarn add slot-generator
 ```
 
 
@@ -24,7 +24,7 @@ yarn add time-slot-generator
 #### Basic Usage
 
 ```javascript
-const generator = require('time-slot-generator');
+const generator = require('slot-generator');
 
 let parm = {
       start: '2022-03-12T05:30:00.000Z',
