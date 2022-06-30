@@ -1,7 +1,7 @@
 # time-slot-generator
 Generating time slots between a time range 
 
-[![npm version](https://badge.fury.io/js/time-slot-generator.svg)](https://badge.fury.io/js/time-slot-generator)
+[![npm version](https://badge.fury.io/js/slot-generator.svg)](https://badge.fury.io/js/slot-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### 🛠 Tutorials
