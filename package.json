@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smdpro/time-slot-generator.git"
+    "url": "git+https://github.com/smdpro/slot-generator.git"
   },
   "keywords": [
     "datetime",
@@ -21,9 +21,9 @@
   "author": "Samad Rahimi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smdpro/time-slot-generator/issues"
+    "url": "https://github.com/smdpro/slot-generator/issues"
   },
-  "homepage": "https://github.com/smdpro/time-slot-generator#readme",
+  "homepage": "https://github.com/smdpro/slot-generator#readme",
   "dependencies": {
     "moment": "^2.29.1"
   },
