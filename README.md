@@ -1,4 +1,4 @@
-# time-slot-generator
+# slot-generator
 Generating time slots between a time range 
 
 [![npm version](https://badge.fury.io/js/slot-generator.svg)](https://badge.fury.io/js/slot-generator)
