@@ -1,6 +1,6 @@
 {
   "name": "slot-generator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Generating time slots between a time range",
   "main": "index.js",
   "scripts": {
