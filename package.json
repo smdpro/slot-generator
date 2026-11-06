@@ -1,11 +1,11 @@
 {
   "name": "slot-generator",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Generating time slots between a time range",
   "main": "index.js",
   "scripts": {
-    "pub": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish",
-    "test": "jest --watchAll --verbose"
+    "test": "node test.js",
+    "pub": "git add . && git commit -m \"Updates\" && git push && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
@@ -14,20 +14,13 @@
   "keywords": [
     "datetime",
     "timeslot",
-    "moment",
-    "datetime",
-    "datetime range"
+    "datetime range",
+    "scheduler"
   ],
   "author": "Samad Rahimi",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/smdpro/slot-generator/issues"
   },
-  "homepage": "https://github.com/smdpro/slot-generator#readme",
-  "dependencies": {
-    "moment": "^2.29.1"
-  },
-  "devDependencies": {
-    "jest": "^23.6.0"
-  }
+  "homepage": "https://github.com/smdpro/slot-generator#readme"
 }

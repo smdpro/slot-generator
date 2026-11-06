@@ -1,93 +1,71 @@
-const moment = require('moment');
 const Periods = Object.freeze({
   minute: 'm',
   hour: 'h',
   day: 'd',
 });
-const MINUTES_PER_HOUR = 60;
-const MINUTES_PER_DAY = MINUTES_PER_HOUR * 24;
-module.exports = (data = {}) => {
-  let {
-    start = moment(),
-    end = moment().add(1, 'hour'),
-    step = 5,
-    period = Periods.minute,
-    daysInWeek = [1, 2, 3, 4, 5, 6, 7],
-    gap = 0,
-  } = data;
 
-  const timeSlots = [];
+/**
+ * Generates recurring time slots between start and end.
+ * @param {Object} opts
+ * @param {Date|string|number} opts.start - Start date (default: now)
+ * @param {Date|string|number} opts.end - End date (default: +1 hour)
+ * @param {number} opts.step - Interval step (default: 5)
+ * @param {'m'|'h'|'d'} opts.period - Unit: minute/hour/day (default: 'm')
+ * @param {number[]} opts.daysInWeek - ISO weekdays 1-7 (default: all)
+ * @param {number} opts.gap - Extra minutes added to step (default: 0)
+ * @returns {Date[]}
+ */
+module.exports = ({ start = new Date(), end = new Date(Date.now() + 36e5), step = 5, period = 'm', daysInWeek = [1,2,3,4,5,6,7], gap = 0 } = {}) => {
+  const slots = [];
+  const daySet = new Set(daysInWeek);
 
-  start = moment(start);
-  end = moment(end);
-  const [startHour, startMinute] = start.format('HH:mm').split(':');
-  const [endHour, endMinute] = end.format('HH:mm').split(':');
-  let pmToAm = false;
+  // Normalize to minute step
+  let stepMin = step;
+  if (period === 'h') stepMin = step * 60 + gap;
+  else if (period === 'd') stepMin = step * 1440;
+  else stepMin += gap;
 
-  if (period === Periods.minute && gap > 0) step = step + gap;
-  if (period === Periods.hour) {
-    step = step * MINUTES_PER_HOUR + gap;
-    period = Periods.minute;
-    if (step >= MINUTES_PER_DAY) {
-      let days = step / MINUTES_PER_DAY;
-      if (days >= 1) {
-        step = Math.ceil(days);
-        period = Periods.day;
-      }
+  const msPerStep = stepMin * 60_000;
+
+  const s = new Date(start).getTime();
+  const e = new Date(end).getTime();
+
+  // Extract daily window from start/end dates
+  const startDate = new Date(s);
+  const endDate = new Date(e);
+  const startH = startDate.getHours();
+  const startM = startDate.getMinutes();
+  const endH = endDate.getHours();
+  const endM = endDate.getMinutes();
+  const crossMidnight = (endH < startH) || (endH === startH && endM <= startM);
+
+  // Day-granularity: simple loop
+  if (period === 'd') {
+    for (let t = s; t <= e; t += msPerStep) {
+      const d = new Date(t);
+      if (daySet.has(d.getDay() || 7)) slots.push(d);
     }
+    return slots;
   }
 
-  if (period === Periods.day) {
-    let current = moment(start);
-    while (current <= end) {
-      if (daysInWeek.includes(current.isoWeekday()))
-        timeSlots.push(current.toDate());
-      current.add(step, period);
+  // Minute/hour granularity: iterate days, then slots within window
+  const dayStart = new Date(startDate);
+  dayStart.setHours(0, 0, 0, 0);
+
+  for (let day = dayStart.getTime(); day <= e; day += 86_400_000) {
+    const dow = new Date(day).getDay() || 7; // ISO weekday
+    if (!daySet.has(dow)) continue;
+
+    const windowStart = day + startH * 3_600_000 + startM * 60_000;
+    let windowEnd = day + endH * 3_600_000 + endM * 60_000;
+    if (crossMidnight) windowEnd += 86_400_000; // next day
+
+    const slotStart = Math.max(windowStart, s);
+    const slotEnd = Math.min(windowEnd, e);
+
+    for (let t = slotStart; t < slotEnd; t += msPerStep) {
+      slots.push(new Date(t));
     }
-    return timeSlots;
   }
-
-  while (start < end) {
-    let current = moment(start);
-    if (!daysInWeek.includes(current.isoWeekday())) {
-      start.add(1, 'day');
-      continue;
-    }
-    let edt = moment(start.format('YYYY-MM-DD')).set({
-      hour: endHour,
-      minute: endMinute,
-    });
-
-    if (current > edt) {
-      edt = moment(start).set({
-        hour: 23,
-        minute: 59,
-        second: 59,
-        millisecond: 999,
-      });
-      pmToAm = true;
-    }
-    while (current < edt) {
-      timeSlots.push(current.toDate());
-      current.add(step, period);
-    }
-    if (pmToAm) {
-      const endx = moment(current).set({
-        hour: endHour,
-        minute: endMinute,
-      });
-      while (current < endx) {
-        timeSlots.push(current.toDate());
-        current.add(step, period);
-      }
-      start = moment(current).set({
-        hour: startHour,
-        minute: startMinute,
-      });
-    }
-    if (!pmToAm) start.add(1, 'day');
-    pmToAm = false;
-  }
-
-  return timeSlots;
+  return slots;
 };
